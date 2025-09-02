@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../lib/AuthContext";
 
 const backURL = "https://library-management-system-efs9.onrender.com";
+// const backURL = "http://localhost:8000";
 
 const useApi = () => {
     const { user, setUser, setSnackbar, setLoading } = useContext(AuthContext);
@@ -27,7 +28,16 @@ const useApi = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || "API request failed.");
+                // Handle validation errors from express-validator
+                if (data.errors && Array.isArray(data.errors)) {
+                    const errorMessages = data.errors
+                        .map((err) => err.msg)
+                        .join(", ");
+                    throw new Error(errorMessages);
+                }
+                throw new Error(
+                    data.message || data.error || "API request failed."
+                );
             }
             return data;
         } catch (error) {

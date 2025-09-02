@@ -6,6 +6,10 @@ import {
     ReservationModel,
 } from "../models/index.js";
 
+const deadline = 14 * 24 * 60 * 60 * 1000; // 14 days
+const renewdeadline = deadline;
+const finePerDayInRs = 10;
+
 async function getUserById(id) {
     try {
         const user = await UserModel.findById(id)
@@ -71,7 +75,7 @@ async function borrowBook(userId, bookId) {
         const newLoan = new LoanModel({
             user: userId,
             book: bookId,
-            dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
+            dueDate: new Date(Date.now() + deadline),
         });
         await newLoan.save({ session });
 
@@ -124,7 +128,7 @@ async function returnBook(userId, bookId) {
             const overdueDays = Math.ceil(
                 (returnDate - dueDate) / (1000 * 60 * 60 * 24)
             );
-            fineAmount = overdueDays * 10; // Rs.10 per day
+            fineAmount = overdueDays * finePerDayInRs;
         }
         loan.fines = fineAmount;
         await loan.save({ session });
@@ -173,7 +177,7 @@ async function returnBook(userId, bookId) {
                 const newLoan = new LoanModel({
                     user: nextUserId,
                     book: bookId,
-                    dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+                    dueDate: new Date(Date.now() + deadline),
                 });
                 await newLoan.save({ session });
 
@@ -303,9 +307,18 @@ async function renewBook(userId, bookId) {
             throw new Error("This book is reserved and cannot be renewed.");
         }
 
-        const newDueDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000); // Add 14 days
+        const newDueDate = new Date(Date.now() + renewdeadline);
         loan.dueDate = newDueDate;
         await loan.save({ session });
+
+        // Update the user's borrowedBooks array with the new due date
+        const borrowedBookIndex = user.borrowedBooks.findIndex(
+            (borrowed) => borrowed.book.toString() === bookId
+        );
+        if (borrowedBookIndex !== -1) {
+            user.borrowedBooks[borrowedBookIndex].dueDate = newDueDate;
+            await user.save({ session });
+        }
 
         await session.commitTransaction();
         session.endSession();

@@ -49,9 +49,10 @@ const BookCard = ({ book, loan, onUpdate }) => {
     };
 
     const handleReturn = async () => {
+        const bookId = loan.book._id || loan.book;
         const response = await api.post("/api/users/return", {
             userId: user._id,
-            bookId: loan.book,
+            bookId: bookId,
         });
         if (response) {
             setSnackbar({
@@ -64,9 +65,10 @@ const BookCard = ({ book, loan, onUpdate }) => {
     };
 
     const handleRenew = async () => {
+        const bookId = loan.book._id || loan.book;
         const response = await api.post("/api/users/renew", {
             userId: user._id,
-            bookId: loan.book,
+            bookId: bookId,
         });
         if (response) {
             setSnackbar({

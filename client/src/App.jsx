@@ -1,6 +1,14 @@
 import React, { useContext, useEffect } from "react";
-import { Container, Box, Snackbar, Alert } from "@mui/material";
+import {
+    Container,
+    Box,
+    Snackbar,
+    Alert,
+    ThemeProvider,
+    CssBaseline,
+} from "@mui/material";
 import { AuthContext, AuthProvider } from "./lib/AuthContext";
+import theme from "./theme";
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -59,25 +67,34 @@ const AppContent = () => {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Header onLogout={onLogout} setCurrentPage={setCurrentPage} />
-            <Container component="main" sx={{ mt: 4, mb: 4 }}>
-                {renderPage()}
-            </Container>
-            <Snackbar
-                open={snackbar.open}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    minHeight: "100vh",
+                    backgroundColor: "background.default",
+                }}
             >
-                <Alert
+                <Header onLogout={onLogout} setCurrentPage={setCurrentPage} />
+                <Container component="main" sx={{ mt: 4, mb: 4 }}>
+                    {renderPage()}
+                </Container>
+                <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={6000}
                     onClose={handleSnackbarClose}
-                    severity={snackbar.severity}
-                    sx={{ width: "100%" }}
                 >
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
-        </Box>
+                    <Alert
+                        onClose={handleSnackbarClose}
+                        severity={snackbar.severity}
+                        sx={{ width: "100%" }}
+                    >
+                        {snackbar.message}
+                    </Alert>
+                </Snackbar>
+            </Box>
+        </ThemeProvider>
     );
 };
 

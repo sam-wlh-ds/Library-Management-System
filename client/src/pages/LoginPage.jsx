@@ -50,6 +50,15 @@ const LoginPage = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                p: 4,
+                backgroundColor: "background.paper",
+                borderRadius: 2,
+                boxShadow:
+                    "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+                border: "1px solid",
+                borderColor: "divider",
+                maxWidth: 500,
+                mx: "auto",
             }}
         >
             <Typography variant="h4" sx={{ mb: 2 }}>

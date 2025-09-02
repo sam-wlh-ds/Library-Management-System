@@ -1,22 +1,60 @@
+:root {
+    --zinc-50: #fafafa;
+    --zinc-100: #f4f4f5;
+    --zinc-200: #e4e4e7;
+    --zinc-300: #d4d4d8;
+    --zinc-400: #a1a1aa;
+    --zinc-500: #71717a;
+    --zinc-600: #52525b;
+    --zinc-700: #3f3f46;
+    --zinc-800: #27272a;
+    --zinc-900: #18181b;
+    --zinc-950: #09090b;
+}
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  .MuiCard-root {
+    background-color: var(--zinc-50);
+    color: var(--zinc-900);
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.MuiCard-root {
     transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .MuiCard-root:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }  
+    background-color: white;
+    border: 1px solid var(--zinc-200);
+}
+
+.MuiCard-root:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(39, 39, 42, 0.15);
+}
+
+/* Custom button styles */
+.MuiButton-containedPrimary {
+    background-color: var(--zinc-700);
+    color: white;
+}
+
+.MuiButton-containedPrimary:hover {
+    background-color: var(--zinc-800);
+}
+
+.MuiButton-outlined {
+    border-color: var(--zinc-300);
+    color: var(--zinc-700);
+}
+
+.MuiButton-outlined:hover {
+    border-color: var(--zinc-500);
+    background-color: var(--zinc-50);
+}

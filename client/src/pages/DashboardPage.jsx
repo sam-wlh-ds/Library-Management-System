@@ -146,7 +146,7 @@ const DashboardPage = () => {
                                 xs={12}
                                 sm={6}
                                 md={4}
-                                key={reservation.book}
+                                key={reservation.book?._id || reservation.book}
                             >
                                 <Card
                                     sx={{
@@ -158,11 +158,20 @@ const DashboardPage = () => {
                                 >
                                     <CardContent>
                                         <Typography variant="h6">
-                                            Reserved Book
+                                            {reservation.book?.title ||
+                                                "Reserved Book"}
                                         </Typography>
-                                        <Typography color="text.secondary">
-                                            Book ID: {reservation.book}
-                                        </Typography>
+                                        {reservation.book?.author && (
+                                            <Typography color="text.secondary">
+                                                by {reservation.book.author}
+                                            </Typography>
+                                        )}
+                                        {reservation.book?.category && (
+                                            <Typography color="text.secondary">
+                                                Category:{" "}
+                                                {reservation.book.category}
+                                            </Typography>
+                                        )}
                                         <Typography color="text.secondary">
                                             Reservation Date:{" "}
                                             {new Date(
